@@ -5,16 +5,17 @@ import requests
 
 class Pokemon:
     pokemons = {}
+
     # Инициализация объекта (конструктор)
     def __init__(self, pokemon_trainer):
 
-        self.pokemon_trainer = pokemon_trainer   
+        self.pokemon_trainer = pokemon_trainer
 
         types = [Wizard, Fighter]
         self.type = random.choice(types)
-        self.power = random.randint(1,200)
+        self.power = random.randint(1, 200)
         self.hp = random.randint(10, 150)
-        self.pokemon_number = random.randint(1,1000)
+        self.pokemon_number = random.randint(1, 1000)
         self.img = self.get_img()
         self.name = self.get_name()
 
@@ -41,10 +42,10 @@ class Pokemon:
             return "Pikachu"
 
     def attack(self, enemy):
-       #if isinstance(enemy, Wizard):
-       #    chance = random.randint(1, 5)
-       #    if chance == 1:
-       #        return "Покемон-волшебник применил щит в сражении"
+        # if isinstance(enemy, Wizard):
+        #    chance = random.randint(1, 5)
+        #    if chance == 1:
+        #        return "Покемон-волшебник применил щит в сражении"
         if enemy.hp > self.power:
             enemy.hp -= self.power
             return f"Сражение @{self.pokemon_trainer} с @{enemy.pokemon_trainer}"
@@ -57,7 +58,6 @@ class Pokemon:
             self.power += 10
             return f'Вы получили бонус! +10 к силе'
 
-
     # Метод класса для получения информации
     def info(self):
         return f"Имя твоего покеомона: {self.name}\n здоровье покемона: {self.hp}\n сила атаки: {self.power}\n класс: {self.type}"
@@ -65,6 +65,7 @@ class Pokemon:
     # Метод класса для получения картинки покемона
     def show_img(self):
         return self.img
+
 
 class Wizard(Pokemon):
     def attack(self, enemy):
