@@ -1,7 +1,13 @@
-import telebot 
+from time import sleep
+
+import telebot
 from config import token
 import random
 from logic import Pokemon, Wizard, Fighter
+import logging
+import sys
+
+
 
 bot = telebot.TeleBot(token) 
 
@@ -22,13 +28,17 @@ def start(message):
         bot.reply_to(message, "Ты уже создал себе покемона")
 
 @bot.message_handler(commands=['attack'])
-def attack_pok(message):
+def attack(message):
     if message.reply_to_message:
         if message.reply_to_message.from_user.username in Pokemon.pokemons.keys() and message.from_user.username in Pokemon.pokemons.keys():
             enemy = Pokemon.pokemons[message.reply_to_message.from_user.username]
             pok = Pokemon.pokemons[message.from_user.username]
             res = pok.attack(enemy)
-            bot.send_message(message.chat.id, res)
+            logging.warning("Результат сражения: ", res)
+            logging.warning(vars(enemy))
+            if res == None:
+                return bot.send_message(message.chat.id, "ОШИБКА")
+            return bot.send_message(message.chat.id, res)
         else:
             bot.send_message(message.chat.id, "Сражаться можно только с покемонами")
     else:
